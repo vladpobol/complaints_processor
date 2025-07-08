@@ -99,13 +99,3 @@ curl -X PATCH http://localhost:8000/complaints/1 -d '{"status": "closed"}' -H "C
 6. **HTTP Request** – PATCH `/complaints/{id}` with `{ "status": "closed" }`.
 
 Provide an `.env` with `TELEGRAM_BOT_TOKEN` and Google service account JSON in n8n credentials.
-
-## Testing
-
-```bash
-pytest
-```
-
-## License
-
-MIT 
