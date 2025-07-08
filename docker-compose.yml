@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  db:
+    image: alpine:latest  # lightweight container to hold the SQLite volume
+    container_name: sqlite
+    volumes:
+      - sqlite-data:/data
+    # Ensure file exists then keep container alive
+    command: ["sh", "-c", "touch /data/db.sqlite3 && tail -f /dev/null"]
+
+  api:
+    build: .
+    container_name: complaints-api
+    env_file:
+      - .env
+    environment:
+      # Override DB path inside container to shared volume
+      DATABASE_URL: "sqlite:////data/db.sqlite3"
+    depends_on:
+      - db
+    volumes:
+      - sqlite-data:/data
+    ports:
+      - "8000:8000"
+
+volumes:
+  sqlite-data: 
